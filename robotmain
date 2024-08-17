@@ -1,0 +1,28 @@
+from motormodule import Motor
+import socket
+ 
+motor= Motor(2,3,4,17,22,27)
+
+# Configuració del servidor WiFi
+HOST = '0.0.0.0'  # Escoltar a totes les IPs
+PORT = 65432  # Port d'escolta
+
+# Crear socket TCP/IP
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.bind((HOST, PORT))
+server_socket.listen(1)
+
+print("Servidor a l'espera de connexions...")
+
+conn, addr = server_socket.accept()
+print(f"Connexió establerta amb {addr}")
+ 
+def main():
+    motor.move(0.6,0,2)
+    motor.stop(2)
+    motor.move(-0.5,0.2,2)
+    motor.stop(2)
+ 
+if __name__ == '__main__':
+    while True:
+        main()
